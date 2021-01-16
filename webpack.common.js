@@ -11,7 +11,19 @@ module.exports = {
     path: dir + "/dist",
   },
   module: {
-    rules: [],
+    rules: [
+      {
+        test: /\.(png|svg|jpe?g|gif)$/,
+        use: [
+          {
+            loader: "file-loader",
+            options: {
+              name: "images/[name].[hash:8].[ext]",
+            },
+          },
+        ],
+      },
+    ],
   },
   plugins: [
     new CleanWebpackPlugin(),

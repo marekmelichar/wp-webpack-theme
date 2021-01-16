@@ -1,5 +1,7 @@
+import "../scss/base.scss";
+
 const hello = () => {
   console.log("hello!!!!!");
 };
 
-hello();
+export default hello;
