@@ -1,6 +1,7 @@
 const path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 const dir = path.resolve(__dirname, ".");
 
@@ -10,6 +11,15 @@ module.exports = {
     filename: "[name].[chunkhash:8].js",
     path: dir + "/dist",
   },
+  // optimization: {
+  //   splitChunks: {
+  //     chunks: "all",
+  //     name: false,
+  //   },
+  //   runtimeChunk: {
+  //     name: (entrypoint) => `runtime-${entrypoint.name}`,
+  //   },
+  // },
   module: {
     rules: [
       {
@@ -29,6 +39,25 @@ module.exports = {
     new CleanWebpackPlugin(),
     new HtmlWebpackPlugin({
       template: dir + "/index.html",
+    }),
+    new ImageMinimizerPlugin({
+      minimizerOptions: {
+        plugins: [
+          ["gifsicle", { interlaced: true }],
+          ["jpegtran", { progressive: true, quality: 70 }],
+          ["optipng", { optimizationLevel: 5 }],
+          [
+            "svgo",
+            {
+              plugins: [
+                {
+                  removeViewBox: false,
+                },
+              ],
+            },
+          ],
+        ],
+      },
     }),
   ],
 };

@@ -16,5 +16,6 @@ module.exports = merge(common, {
   },
   devServer: {
     publicPath: "/",
+    hot: true,
   },
 });
